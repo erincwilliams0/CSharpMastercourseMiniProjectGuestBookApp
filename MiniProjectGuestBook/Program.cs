@@ -17,10 +17,23 @@
                 string actionCodeText = Console.ReadLine();
                 bool isValidCode = int.TryParse(actionCodeText, out actionCode);
 
-                if (!isValidCode) 
+                if (isValidCode)
+                {
+                    if(actionCode == 1)
+                    {
+                        guestBook.RegisterParty();
+                    }
+
+                    if(actionCode == 2)
+                    {
+                        guestBook.Print();
+                    }
+
+
+                }
+                else
                 {
                     Console.WriteLine("\n that was not a valid code please try again");
-                    return;
                 }
 
 

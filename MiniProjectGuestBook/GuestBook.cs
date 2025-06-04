@@ -9,7 +9,7 @@ namespace MiniProjectGuestBook
 {
     public class GuestBook
     {
-        Dictionary<string, int> GuestBookDetails { get; set; }
+        Dictionary<string, int> GuestBookDetails { get; set; } = new Dictionary<string, int>();
 
         // first method propmpts user for name and party size then stores them
         public void RegisterParty()
@@ -25,7 +25,7 @@ namespace MiniProjectGuestBook
                 name = Regex.Replace(name, "[0-9]", "");
             }
 
-            Console.Write("Great now please enter the size of your party, you must enter a size greater than zero");
+            Console.Write("Great now please enter the size of your party, you must enter a size greater than zero: ");
             string partySizeText = Console.ReadLine();
             bool isValidSize = int.TryParse(partySizeText, out int partySize);
 
@@ -39,13 +39,35 @@ namespace MiniProjectGuestBook
         }
 
         // second method gets the total party size from the guest book
+        private int calculateTotalPartySize()
+        {
+            int output = 0;
+
+            if (GuestBookDetails.Count > 0) 
+            {
+                foreach (var party in GuestBookDetails)
+                {
+                    output += party.Value;
+                }
+            }
+            return output;
+        }
 
         //third method prints the guest list of names and a total party count
         public void Print()
         {
-            foreach (var party in GuestBookDetails)
+            int totalPartyCount = calculateTotalPartySize();
+            if (GuestBookDetails.Count > 0)
             {
-                Console.WriteLine(party.Key);
+                foreach (var party in GuestBookDetails)
+                {
+                    Console.WriteLine($"Party for {party.Key} size {party.Value}");
+                }
+                    Console.WriteLine($"Total party guest count: {totalPartyCount}");
+
+            } else
+            {
+                Console.WriteLine("No registered Parties available");
             }
         }
     }
